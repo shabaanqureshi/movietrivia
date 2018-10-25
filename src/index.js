@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {Route, BrowserRouter} from 'react-router-dom';
 import MovieTrivia from '../src/components/movietrivia/MovieTrivia';
 import * as serviceWorker from './serviceWorker';
+import HomePage from './components/home/HomePage';
 
 const actors = [
     {
@@ -42,5 +44,15 @@ const actors = [
     }
 ];
 
-ReactDOM.render(<MovieTrivia />, document.getElementById('root'));
+function render() {
+    ReactDOM.render(
+    <BrowserRouter>
+      <React.Fragment>
+        <Route exact path="/" component={HomePage} />
+      </React.Fragment>
+    </BrowserRouter>, document.getElementById('root'));
+  }
+  render();
+
+
 serviceWorker.unregister();
