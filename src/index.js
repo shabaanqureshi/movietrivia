@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {Route, BrowserRouter} from 'react-router-dom';
-import MovieTrivia from '../src/components/movietrivia/MovieTrivia';
 import * as serviceWorker from './serviceWorker';
 import HomePage from './components/home/HomePage';
+import MovieTrivia from '../src/components/movietrivia/MovieTrivia';
+import ActorForm from './components/actorform/ActorForm';
 
 const actors = [
     {
@@ -48,7 +49,9 @@ function render() {
     ReactDOM.render(
     <BrowserRouter>
       <React.Fragment>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path = "/" component = {HomePage} />
+        <Route exact path = "/game" component = {MovieTrivia} />
+        <Route exact path= "/add" component = {ActorForm} />
       </React.Fragment>
     </BrowserRouter>, document.getElementById('root'));
   }

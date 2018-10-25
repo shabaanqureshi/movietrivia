@@ -1,5 +1,5 @@
 import React from 'react';
-//import {Link} from 'react-router';
+import {Link} from 'react-router-dom'
 import '../../../src/bootstrap.min.css'; 
 import '../../styles/HomePage.css';
 
@@ -34,14 +34,18 @@ function Footer() {
 
   function Continue({ onContinue }) {
     return (
-        <div>
-            <div className="row continue">
+        <div className = "row continue">
+            <div>
+              <Link to="/game">
                 <button className="btn btn-primary btn-lg float-left" onClick={onContinue}>Click Here To Play</button>
-        </div>
-        <hr class="my-4"></hr>
-       <div>
-           <button className="btn btn-danger btn-lg float-none" onClick={onContinue}>Click Here To Play</button>
-       </div>
+              </Link>
+            </div>
+            <hr class="my-4"></hr>
+            <div>
+              <Link to="/add">
+                <button className="btn btn-danger btn-lg float-left" onClick={onContinue}>Click Here To Add Actor/Actress</button>
+              </Link>
+            </div>
        </div> 
     );
   }
