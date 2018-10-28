@@ -8,8 +8,9 @@ import './index.css';
 import HomePage from './components/home/HomePage';
 import MovieTrivia from '../src/components/movietrivia/MovieTrivia';
 import ActorForm from './components/actorform/ActorForm';
+import reducer from '../src/reducer/reducers';
 
-const actors = [
+export const actors = [
     {
         name: 'Angelina Jolie',
         imageUrl: 'images/actors/angelinajolie.jpg',
@@ -47,83 +48,6 @@ const actors = [
     }
 ];
 
-/*
-Helper function to randomize the ordering of our movies array
-*/
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
-
-/*
-Helper function to choose a random value
-*/
-function sample(items)
-{
-    return items[Math.floor(Math.random()*items.length)];
-}
-
-/*
-Function to return all the movies from all actors into one array
-*/
-function allMovies(actors) {
-    return actors.reduce((p, c, i) => {
-        return p.concat(c.movies);
-    }, []);
-};
-
-/*
-Function to generate the choices of movies and the actor
-*/
-function getData(actors) {
-    const movies = allMovies(actors);
-    const fiveRandomMovies = shuffle(movies).slice(0,6);
-    const answer = sample(fiveRandomMovies);
-    return {
-        movies: fiveRandomMovies,
-        actor: actors.find(actor =>  actor.movies.some((title => title === answer)))
-    }
-}
-
-/*
-Fill in the state with the default values for the reducer
-*/
-function defaultState() {
-    return {
-        actors,
-        data: getData(actors),
-        ink: ''
-    }
-}
-
-function reducer(state = defaultState(), action) {
-    switch (action.type) {
-        case 'ANSWER_SELECTED':
-            const isCorrect = state.data.actor.movies.some(movie => movie === action.answer);
-            return Object.assign({}, state, {
-                ink: isCorrect ? 'correct' : 'wrong'
-            });
-        case 'CONTINUE': 
-            return Object.assign({}, state, {
-                ink: '', 
-                data: getData(state.actors)
-            });
-        case 'ADD_ACTOR':
-            return Object.assign({}, state, {
-            actors: state.actors.concat([action.actor])
-          });
-        default: return state;
-    }
-}
-
-
 let store = Redux.createStore(reducer);
 
   ReactDOM.render(
@@ -138,3 +62,4 @@ let store = Redux.createStore(reducer);
     </BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.unregister();
+
