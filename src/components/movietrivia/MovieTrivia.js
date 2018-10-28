@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import '../../styles/MovieTrivia.css';
 import '../../../src/bootstrap.min.css'; 
 
@@ -74,6 +75,24 @@ function Continue({ show, onContinue }) {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    data: state.data,
+    ink: state.ink
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onAnswerSelected: answer => {
+      dispatch({ type: 'ANSWER_SELECTED', answer});
+    },
+    onContinue: () => {
+      dispatch({ type: 'CONTINUE'});
+    }
+  }
+}
+
 function MovieTrivia({data, ink, onAnswerSelected, onContinue}) {
   return (
     <div className="container-fluid">
@@ -85,4 +104,4 @@ function MovieTrivia({data, ink, onAnswerSelected, onContinue}) {
   );
 }
 
-export default MovieTrivia;
+export default connect(mapStateToProps, mapDispatchToProps)(MovieTrivia);

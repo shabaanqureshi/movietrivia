@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Route, BrowserRouter, withRouter} from 'react-router-dom';
+import * as Redux from 'redux';
+import * as ReactRedux from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import HomePage from './components/home/HomePage';
@@ -90,34 +92,37 @@ function getData(actors) {
     }
 }
 
-let state = {
-    data: getData(actors),
-    ink: ''
+function initState() {
+    return {
+        actors,
+        data: getData(actors),
+        ink: ''
+    }
 }
 
-/*
-Function to determine which color to color the text depending if the user's answer is correct or wrong
-*/
-function onAnswerSelected(answer) {
-    const choice = state.data.actor.movies.some(movie => movie === answer);
-    if (choice) {
-        state.ink = 'correct';
+function reducer(state = initState(), action) {
+    switch (action.type) {
+        case 'ANSWER_SELECTED':
+            const isCorrect = state.data.actor.movies.some(movie => movie === action.answer);
+            return Object.assign({}, state, {
+                ink: isCorrect ? 'correct' : 'wrong'
+            });
+        case 'CONTINUE': 
+            return Object.assign({}, state, {
+                ink: '', 
+                data: getData(state.actors)
+            });
+        default: return state;
     }
-    else {
-        state.ink = 'wrong';
-    }
-    render();
-  }
+}
+
+
+let store = Redux.createStore(reducer);
 
 function Game() {
-    return<MovieTrivia {...state} onAnswerSelected = {onAnswerSelected}
-    onContinue = {() => {
-        state = {
-            data: getData(actors),
-            ink: ''
-        }
-        render();
-    }}/>
+    return <ReactRedux.Provider store = {store} >
+    <MovieTrivia />
+    </ReactRedux.Provider>
 }
 
 const ActorWrapper = withRouter(({history}) => 
@@ -128,7 +133,6 @@ const ActorWrapper = withRouter(({history}) =>
         }} />
 );
 
-function render() {
   ReactDOM.render(
       <BrowserRouter>
       <React.Fragment>
@@ -137,6 +141,5 @@ function render() {
       <Route path = "/add" component = {ActorWrapper} />
       </React.Fragment>
     </BrowserRouter>, document.getElementById('root'));
-}
-render();
+
 serviceWorker.unregister();
