@@ -1,10 +1,10 @@
 .jumbotron {
     background: linear-gradient(#e66465, #9198e5);
     text-align: center;
-    margin: auto;
-    width: 100%;
-    border: 3px solid green;
-    padding: 0px;
+    width: auto;
+    border: 10px solid green;
+    padding: 20px;
+    margin: 50px;
 }
 
 #footer {

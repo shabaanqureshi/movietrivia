@@ -26,7 +26,7 @@ function Footer() {
     return (<div id="footer" className="row">
       <div className="col-12">
           <p className="text-muted credit">
-            All images are from <a href="https://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a> and are open source
+            All images are from <a className = "txt" href="https://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a> and are open source
           </p>
       </div>
     </div>);

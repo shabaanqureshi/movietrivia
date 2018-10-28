@@ -1,0 +1,12 @@
+.actorForm {
+    width: 80%;
+    margin: 50px 10%;
+}
+
+.actorFormInput {
+    margin-bottom: 20px;
+}
+
+.actorFormInput > label {
+    display: block;
+}

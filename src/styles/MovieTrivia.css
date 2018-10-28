@@ -42,3 +42,8 @@
     body { 
         background: lightblue  no-repeat fixed center; 
     }
+
+    .continue {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }

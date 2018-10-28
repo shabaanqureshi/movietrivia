@@ -62,12 +62,25 @@ Data.propTypes = {
   onAnswerSelected: PropTypes.func.isRequired,
 };
 
-function MovieTrivia({data, ink, onAnswerSelected}) {
+function Continue({ show, onContinue }) {
+  return (
+    <div className="row continue">
+    { show 
+      ? <div className="col-11">
+          <button className="btn btn-primary btn-lg float-right" onClick={onContinue}>Continue</button>
+        </div>
+      : null }
+    </div>
+  );
+}
+
+function MovieTrivia({data, ink, onAnswerSelected, onContinue}) {
   return (
     <div className="container-fluid">
     <ScoreDisplay />
     <ScoreBoard />
     <Data {...data} ink = {ink} onAnswerSelected = {onAnswerSelected}/>
+    <Continue show = {ink === 'correct'} onContinue = {onContinue} />
     </div>
   );
 }

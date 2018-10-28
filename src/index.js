@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Route, BrowserRouter} from 'react-router-dom';
+import {Route, BrowserRouter, withRouter} from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import HomePage from './components/home/HomePage';
@@ -90,10 +90,10 @@ function getData(actors) {
     }
 }
 
-const state = {
+let state = {
     data: getData(actors),
     ink: ''
-};
+}
 
 /*
 Function to determine which color to color the text depending if the user's answer is correct or wrong
@@ -110,8 +110,23 @@ function onAnswerSelected(answer) {
   }
 
 function Game() {
-    return<MovieTrivia {...state} onAnswerSelected = {onAnswerSelected}/>
+    return<MovieTrivia {...state} onAnswerSelected = {onAnswerSelected}
+    onContinue = {() => {
+        state = {
+            data: getData(actors),
+            ink: ''
+        }
+        render();
+    }}/>
 }
+
+const ActorWrapper = withRouter(({history}) => 
+    <ActorForm onAddActor = 
+        {actor => {
+            actors.push(actor);
+            history.push('/');
+        }} />
+);
 
 function render() {
   ReactDOM.render(
@@ -119,7 +134,7 @@ function render() {
       <React.Fragment>
       <Route exact path = "/" component = {HomePage} />
       <Route path = "/game" component = {Game} />
-      <Route path = "/add" component = {ActorForm} />
+      <Route path = "/add" component = {ActorWrapper} />
       </React.Fragment>
     </BrowserRouter>, document.getElementById('root'));
 }
