@@ -38,8 +38,8 @@ class Form extends React.Component {
             </div>
             <div className="actorFormInput">
                 <label htmlFor="imageUrl">Image</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="imageUrl" value={this.state.imageUrl} 
-                onChange={this.onFieldChange}></input>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" accept = "image/png, image/jpeg" name="imageUrl" 
+                value={this.state.imageUrl} onChange={this.onFieldChange}></input>
             </div>
             <div className="actorFormInput">
                 <label htmlFor="movieTemp">Movies</label>
