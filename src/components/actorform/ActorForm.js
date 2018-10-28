@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import '../../styles/ActorForm.css';
 import '../../../src/bootstrap.min.css'; 
 
@@ -50,10 +52,23 @@ class Form extends React.Component {
     }
 }
 
+function mapStateToProps(state ) {
+    
+}
+
+function mapDispatchToProps(dispatch, props) {
+    return {
+        onAddActor: actor => {
+            dispatch( {type: 'ADD_ACTOR', actor});
+            props.history.push('/');
+        }
+    }
+}
+
 function ActorForm({match, onAddActor}) {
     return <div className="actorForm">
         <h1>Add Actor/Actress</h1>
         <Form onAddActor={onAddActor}/>
     </div>;
 }
-export default ActorForm;
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ActorForm));

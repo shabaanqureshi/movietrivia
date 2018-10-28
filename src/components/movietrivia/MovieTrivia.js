@@ -84,10 +84,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAnswerSelected: answer => {
+    onAnswerSelected: answer => 
+    {
       dispatch({ type: 'ANSWER_SELECTED', answer});
     },
-    onContinue: () => {
+    onContinue: () => 
+    {
       dispatch({ type: 'CONTINUE'});
     }
   }

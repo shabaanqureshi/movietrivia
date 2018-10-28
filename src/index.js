@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Route, BrowserRouter, withRouter} from 'react-router-dom';
+import {Route, BrowserRouter} from 'react-router-dom';
 import * as Redux from 'redux';
 import * as ReactRedux from 'react-redux';
 import * as serviceWorker from './serviceWorker';
@@ -92,7 +92,10 @@ function getData(actors) {
     }
 }
 
-function initState() {
+/*
+Fill in the state with the default values for the reducer
+*/
+function defaultState() {
     return {
         actors,
         data: getData(actors),
@@ -100,7 +103,7 @@ function initState() {
     }
 }
 
-function reducer(state = initState(), action) {
+function reducer(state = defaultState(), action) {
     switch (action.type) {
         case 'ANSWER_SELECTED':
             const isCorrect = state.data.actor.movies.some(movie => movie === action.answer);
@@ -112,6 +115,10 @@ function reducer(state = initState(), action) {
                 ink: '', 
                 data: getData(state.actors)
             });
+        case 'ADD_ACTOR':
+            return Object.assign({}, state, {
+            actors: state.actors.concat([action.actor])
+          });
         default: return state;
     }
 }
@@ -119,27 +126,15 @@ function reducer(state = initState(), action) {
 
 let store = Redux.createStore(reducer);
 
-function Game() {
-    return <ReactRedux.Provider store = {store} >
-    <MovieTrivia />
-    </ReactRedux.Provider>
-}
-
-const ActorWrapper = withRouter(({history}) => 
-    <ActorForm onAddActor = 
-        {actor => {
-            actors.push(actor);
-            history.push('/');
-        }} />
-);
-
   ReactDOM.render(
       <BrowserRouter>
+      <ReactRedux.Provider store = {store} >
       <React.Fragment>
       <Route exact path = "/" component = {HomePage} />
-      <Route path = "/game" component = {Game} />
-      <Route path = "/add" component = {ActorWrapper} />
+      <Route path = "/game" component = {MovieTrivia} />
+      <Route path = "/add" component = {ActorForm} />
       </React.Fragment>
+      </ReactRedux.Provider>
     </BrowserRouter>, document.getElementById('root'));
 
 serviceWorker.unregister();
