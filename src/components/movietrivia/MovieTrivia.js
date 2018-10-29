@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import '../../styles/MovieTrivia.css';
 import '../../../src/bootstrap.min.css'; 
+
 
 function ScoreDisplay() {
   return (
@@ -10,20 +12,50 @@ function ScoreDisplay() {
   )
 }
 
-function ScoreBoard() {
+class ScoreBoard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userScore: 0,
+      computerScore: 0
+    };
+    this.onWrongAnswer = this.onWrongAnswer.bind(this);
+    this.onCorrectAnswer = this.onCorrectAnswer.bind(this);
+  }
+  onWrongAnswer() {
+    this.setState({userScore : this.state.userScore + 1});
+  }
+  onCorrectAnswer() {
+    this.setState({userScore : this.state.computerScore + 1});
+  }
+  render() {
   return (
+    <React.Fragment>
+  <ScoreDisplay /> 
   <div class="container">
   <div class="row board">
     <div class="col">Computer</div>
-    <div class="col">You</div>
+    <div class="col">User</div>
     <div class="w-100"></div>
-    <div class="col">Computer</div>
-    <div class="col">You</div>
+    <div class="col">{this.state.computerScore}</div>
+    <div class="col">{this.state.computerScore}</div>
   </div>
-  </div>)
-  ;
+  </div>
+  </React.Fragment>);
+  }
 }
 
+function BackToHome() {
+  return (
+    <Link to = "/">
+      <button type="button" class="btn btn-dark">Back To Home</button>
+    </Link>
+  )
+}
+
+/*
+List the title of the movie
+*/
 function Movie({name, onClick}) {
   return (
     <div className = "list" onClick = {() => {onClick(name);}}>
@@ -32,6 +64,9 @@ function Movie({name, onClick}) {
   );
 }
 
+/*
+Provides mapping from the result of the user's answer to color
+*/
 function TextToInk(ink) {
   const mapping = {
     'none': '',
@@ -41,6 +76,9 @@ function TextToInk(ink) {
   return mapping[ink];
 }
 
+/*
+Renders the actor's image and the list of movies
+*/
 function Data({actor, movies, ink, onAnswerSelected}) {
   return (
   <div className="row data">
@@ -63,6 +101,9 @@ Data.propTypes = {
   onAnswerSelected: PropTypes.func.isRequired,
 };
 
+/*
+Displays a Continue button when the user has selected the correct answer
+*/
 function Continue({ show, onContinue }) {
   return (
     <div className="row continue">
@@ -98,10 +139,10 @@ function mapDispatchToProps(dispatch) {
 function MovieTrivia({data, ink, onAnswerSelected, onContinue}) {
   return (
     <div className="container-fluid">
-    <ScoreDisplay />
     <ScoreBoard />
     <Data {...data} ink = {ink} onAnswerSelected = {onAnswerSelected}/>
     <Continue show = {ink === 'correct'} onContinue = {onContinue} />
+    <BackToHome />
     </div>
   );
 }
