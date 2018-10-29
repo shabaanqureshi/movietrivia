@@ -12,23 +12,7 @@ function ScoreDisplay() {
   )
 }
 
-class ScoreBoard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userScore: 0,
-      computerScore: 0
-    };
-    this.onWrongAnswer = this.onWrongAnswer.bind(this);
-    this.onCorrectAnswer = this.onCorrectAnswer.bind(this);
-  }
-  onWrongAnswer() {
-    this.setState({userScore : this.state.userScore + 1});
-  }
-  onCorrectAnswer() {
-    this.setState({userScore : this.state.computerScore + 1});
-  }
-  render() {
+function ScoreBoard({userScore, computerScore}){
   return (
     <React.Fragment>
   <ScoreDisplay /> 
@@ -37,12 +21,11 @@ class ScoreBoard extends React.Component {
     <div class="col">Computer</div>
     <div class="col">User</div>
     <div class="w-100"></div>
-    <div class="col">{this.state.computerScore}</div>
-    <div class="col">{this.state.computerScore}</div>
+    <div class="col">{computerScore}</div>
+    <div class="col">{userScore}</div>
   </div>
   </div>
   </React.Fragment>);
-  }
 }
 
 function BackToHome() {
@@ -119,7 +102,9 @@ function Continue({ show, onContinue }) {
 function mapStateToProps(state) {
   return {
     data: state.data,
-    ink: state.ink
+    ink: state.ink,
+    computerScore: state.computerScore,
+    userScore: state.userScore
   }
 }
 
@@ -136,10 +121,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function MovieTrivia({data, ink, onAnswerSelected, onContinue}) {
+function MovieTrivia({data, ink, onAnswerSelected, onContinue, userScore, computerScore}) {
   return (
     <div className="container-fluid">
-    <ScoreBoard />
+    <ScoreBoard userScore = {userScore} computerScore = {computerScore} />
     <Data {...data} ink = {ink} onAnswerSelected = {onAnswerSelected}/>
     <Continue show = {ink === 'correct'} onContinue = {onContinue} />
     <BackToHome />

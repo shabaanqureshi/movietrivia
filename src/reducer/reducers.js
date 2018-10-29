@@ -6,7 +6,9 @@ function defaultState() {
   return {
       actors,
       data: getData(actors),
-      ink: ''
+      ink: '',
+      computerScore: 0,
+      userScore: 0
   }
 }
 
@@ -15,7 +17,9 @@ export default function reducer(state = defaultState(), action) {
     case types.ANSWER_SELECTED:
       const isCorrect = state.data.actor.movies.some(movie => movie === action.answer);
       return Object.assign({}, state, {
-          ink: isCorrect ? 'correct' : 'wrong'
+          ink: isCorrect ? 'correct' : 'wrong',
+          userScore: isCorrect ? state.userScore + 1 : state.userScore,
+          computerScore: !isCorrect? state.computerScore + 1 : state.computerScore
       });
 
     case types.CONTINUE:

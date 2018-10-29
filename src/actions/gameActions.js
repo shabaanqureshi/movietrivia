@@ -7,3 +7,4 @@ export function answerSelected(answer) {
 export function continueGame() {
     return {type: types.CREATE_COURSE_SUCCESS};
   }
+
