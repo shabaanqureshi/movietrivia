@@ -62,14 +62,15 @@ function TextToInk(ink) {
 /*
 Renders the actor's image and the list of movies
 */
-function Data({actor, movies, ink, onAnswerSelected}) {
+function Data({actor, movies, ink, onAnswerSelected, chosen}) {
+  let selected = chosen ? "chosen" : "notchosen";
   return (
   <div className="row data">
     <div className = "col-5 offset-1">
       <img src={actor.imageUrl} className = "actorimage" alt="Actor"/>
     </div>
     <div className = "col-5" style={{color: TextToInk(ink)}}>
-      {movies.map(name => <Movie name  = {name} key = {name} onClick = {onAnswerSelected} /> )};
+      {movies.map(name => <Movie name  = {name} key = {name} onClick = {onAnswerSelected} className = {selected} /> )};
     </div>
   </div>);
 }
@@ -87,12 +88,15 @@ Data.propTypes = {
 /*
 Displays a Continue button when the user has selected the correct answer
 */
-function Continue({ show, onContinue }) {
+function Continue({ show, onContinue, chosen}) {
+  let selected = chosen ? "chosen" : "notchosen";
   return (
     <div className="row continue">
     { show 
       ? <div className="col-11">
+        <div className = {selected}>
           <button className="btn btn-primary btn-lg float-right" onClick={onContinue}>Continue</button>
+          </div>
         </div>
       : null }
     </div>
@@ -104,7 +108,8 @@ function mapStateToProps(state) {
     data: state.data,
     ink: state.ink,
     computerScore: state.computerScore,
-    userScore: state.userScore
+    userScore: state.userScore,
+    chosen: state.chosen
   }
 }
 
@@ -121,12 +126,12 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-function MovieTrivia({data, ink, onAnswerSelected, onContinue, userScore, computerScore}) {
+function MovieTrivia({data, ink, onAnswerSelected, onContinue, userScore, computerScore, chosen}) {
   return (
     <div className="container-fluid">
     <ScoreBoard userScore = {userScore} computerScore = {computerScore} />
-    <Data {...data} ink = {ink} onAnswerSelected = {onAnswerSelected}/>
-    <Continue show = {ink === 'correct'} onContinue = {onContinue} />
+    <Data {...data} ink = {ink} onAnswerSelected = {onAnswerSelected} chosen = {chosen}/>
+    <Continue show = {ink === 'correct'} onContinue = {onContinue} chosen = {chosen} />
     <BackToHome />
     </div>
   );

@@ -8,7 +8,8 @@ function defaultState() {
       data: getData(actors),
       ink: '',
       computerScore: 0,
-      userScore: 0
+      userScore: 0,
+      chosen: false
   }
 }
 
@@ -19,13 +20,15 @@ export default function reducer(state = defaultState(), action) {
       return Object.assign({}, state, {
           ink: isCorrect ? 'correct' : 'wrong',
           userScore: isCorrect ? state.userScore + 1 : state.userScore,
-          computerScore: !isCorrect? state.computerScore + 1 : state.computerScore
+          computerScore: !isCorrect? state.computerScore + 1 : state.computerScore,
+          chosen: true
       });
 
     case types.CONTINUE:
     return Object.assign({}, state, {
       ink: '', 
-      data: getData(state.actors)
+      data: getData(state.actors),
+      chosen: false
   });
     case types.ADD_ACTOR:
     return Object.assign({}, state, {
