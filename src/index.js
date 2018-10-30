@@ -13,17 +13,17 @@ import reducer from '../src/reducer/reducers';
 export const actors = [
     {
         name: 'Angelina Jolie',
-        imageUrl: 'images/actors/angelinajolie.jpg',
+        image: 'images/actors/angelinajolie.jpg',
         movies: ['Salt', 'Maleficient', 'Wanted', 'Mr. & Mrs. Smith', 'The Tourist']
     },
     {
         name: 'Client Eastwood',
-        imageUrl: 'images/actors/clienteastwood.jpg',
+        image: 'images/actors/clienteastwood.jpg',
         movies: ['Million Dollar Baby', 'Escape from Alcatraz', 'For a Few Dollars More', 'Unforgiven', 'Gran Torino']
     },
     {
         name: 'Daniel Day-Lewis',
-        imageUrl: 'images/actors/danieldaylewis.jpg',
+        image: 'images/actors/danieldaylewis.jpg',
         movies: ['Lincoln', 'There Will Be Blood', 'Gangs of New York', 'My Left Foot', 'In The Name of the Father']
     },
     {
